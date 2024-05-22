@@ -3,19 +3,15 @@ const playersData = require('../data/players.json');
 
 const addTeam = async (req, res) => {
     try {
-        // const { teamName, players, captain, viceCaptain } = req.body;
-        const teamName = 'My team4'
-        const players = ["RD Gaikwad", "M Prasidh Krishna", 'MM Ali', "MS Dhoni", "OC McCoy", "Simarjeet Singh", "Mukesh Choudhary",
-            "PH Solanki", "Deepak Chahar", "Karun Nair", "Shivam Dube"
-        ]
-        const captain = 'MS Dhoni'
-        const viceCaptain = 'Shivam Dube'
+        const { teamName, players, captain, viceCaptain } = req.body;
+     
         // checking teamName duplication
         const existTeam= await Team.find({teamName:teamName})
         if(existTeam.length>0){
             return res.status(400).json({ msg: `${teamName} is already exsist` });
         }
         // Checking players duplication
+        console.log(players);
         const uniquePlayers = new Set(players)
         if (uniquePlayers.size !== players.length) {
             return res.status(400).json({ msg: 'Players should be unique' });
