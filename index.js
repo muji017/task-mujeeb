@@ -15,8 +15,9 @@ app.get('/', async (req, res) => {
   res.send('Hello World!');
 });
 
-app.get('/add-team',teamController.addTeam)
+app.post('/add-team',teamController.addTeam)
 app.get('/process-result',matchController.processResult)
+app.get('/team-result',matchController.teamResult)
 
 //
 app.listen(port, () => {

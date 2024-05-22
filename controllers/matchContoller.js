@@ -122,7 +122,28 @@ const processResult = async (req, res) => {
         res.status(500).send('Server error');
     }
 }
-
+const teamResult = async (req, res) => {
+    try {
+        const allTeams=await Team.find({})
+        const maxPoints = Math.max(...allTeams.map(team => team.points));
+        const winners = allTeams.filter(team => team.points === maxPoints);
+        console.log(winners);
+        res.json({
+            allTeams: allTeams.map(team => ({
+                name: team.teamName,
+                totalPoints: team.points
+            })),
+            winners: winners.map(team => ({
+                name: team.teamName,
+                totalPoints: team.points
+            }))
+        });
+    } catch (error) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
+}
 module.exports = {
-    processResult
+    processResult,
+    teamResult
 }
