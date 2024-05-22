@@ -4,7 +4,7 @@ const playersData = require('../data/players.json');
 const addTeam = async (req, res) => {
     try {
         // const { teamName, players, captain, viceCaptain } = req.body;
-        const teamName = 'My team1'
+        const teamName = 'My team4'
         const players = ["RD Gaikwad", "M Prasidh Krishna", 'MM Ali', "MS Dhoni", "OC McCoy", "Simarjeet Singh", "Mukesh Choudhary",
             "PH Solanki", "Deepak Chahar", "Karun Nair", "Shivam Dube"
         ]

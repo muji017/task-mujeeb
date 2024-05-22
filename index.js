@@ -2,22 +2,16 @@ require('dotenv').config();
 const express = require('express');
 const mongoose=require('mongoose')
 const app = express();
+const bodyparser=require('body-parser');
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({extended:true}));
 const port = process.env.PORT;
 const connectDB=require('./connect_db')
-const teamController=require('./controllers/teamController')
-const matchController=require('./controllers/matchContoller')
+const userRoute=require('./router/router')
 
 connectDB()
-
 // Endpoints
-
-app.get('/', async (req, res) => {
-  res.send('Hello World!');
-});
-
-app.post('/add-team',teamController.addTeam)
-app.get('/process-result',matchController.processResult)
-app.get('/team-result',matchController.teamResult)
+app.use('/',userRoute);
 
 //
 app.listen(port, () => {
