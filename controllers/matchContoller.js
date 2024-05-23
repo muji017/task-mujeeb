@@ -98,6 +98,7 @@ const processResult = async (req, res) => {
                     playerResults[batterName].isDuck = true;
                     playerResults[batterName].points -= 2; // Duck penalty
                 }
+
             }
         });
 
@@ -107,6 +108,12 @@ const processResult = async (req, res) => {
             let totalPoints = 0;
             for (const playerName of team.players) {
                 let playerPoints = playerResults[playerName] ? playerResults[playerName].points : 0;
+                if (playerResults[playerName].runs > 30) playerPoints += 4 // bonus 30 runs
+                if (playerResults[playerName].runs >= 50) playerPoints += 8 // Half-century Bonus
+                if (playerResults[playerName].runs >= 100) playerPoints += 16 // Century Bonus
+                if (playerResults[playerName].wickets===3)  playerPoints += 4 // 3 Wicket Bonus	
+                if (playerResults[playerName].wickets===4)  playerPoints += 8 // 4 Wicket Bonus	
+                if (playerResults[playerName].wickets===5)  playerPoints += 16 // 5 Wicket Bonus	
                 if (playerName === team.captain) playerPoints *= 2;
                 if (playerName === team.viceCaptain) playerPoints *= 1.5;
                 totalPoints += playerPoints;
@@ -124,7 +131,7 @@ const processResult = async (req, res) => {
 }
 const teamResult = async (req, res) => {
     try {
-        const allTeams=await Team.find({})
+        const allTeams = await Team.find({})
         const maxPoints = Math.max(...allTeams.map(team => team.points));
         const winners = allTeams.filter(team => team.points === maxPoints);
         console.log(winners);
